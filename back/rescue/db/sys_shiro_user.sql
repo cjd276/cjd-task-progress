@@ -1,0 +1,1 @@
+INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `mobile`, `create_time`, `modify_time`, `delete_status`) VALUES ('sys_1', 'admin', 'admin', '张金林', '', '2019-04-25 08:01:03', '2019-04-28 14:03:46', '0');

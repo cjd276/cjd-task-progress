@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjd.rescue.dao.product.TaskModuleMapper">
+
+
+    
+
+    <select id="listProjectModuleList" parameterType="java.lang.String" resultMap="pm">
+      select p.id,p.name,p.code,p.current_version,m.id AS mid,m.name AS mname,m.code AS mcode,m.project_id FROM pro_project p LEFT JOIN module m ON p.id = m.project_id WHERE p.team_id=#{team_id}
+    </select>
+
+    <resultMap id="pm" type="com.cjd.rescue.entity.product.Project">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="code" property="code"></result>
+        <result column="current_version" property="current_version"></result>
+        <!--关联属性的映射关系-->
+        <collection property="modules" ofType="com.cjd.rescue.entity.product.Module">
+            <id column="project_id"/>
+            <result column="mname" property="name"/>
+            <result column="project_id" property="project_id"></result>
+            <result column="mcode" property="code"></result>
+            <result column="mid" property="id"></result>
+        </collection>
+    </resultMap>
+
+
+</mapper>
