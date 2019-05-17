@@ -7,7 +7,7 @@
 
   <!-- 日志路径，这里是相对路径，默认IDE下会输出到当前目录target/logs下，tomcat会输出到tomcat/logs目录下 -->
   <!-- 如果一个tomcat下面部署多个项目，再加一级路径，比如tomcat/logs/app1，/logs/app2 -->
-  <property name="LOG_HOME" value="/home/tomcat/logs/rescue-product" />
+  <property name="LOG_HOME" value="/Users/chengjunda/logs/rescue-product" />
 
   <!-- 主日志级别ROOT -->
   <property name="ROOT_LEVEL" value="${log.root.level:-INFO}" />

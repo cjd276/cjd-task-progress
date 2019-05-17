@@ -148,7 +148,11 @@ function extend() {
 }
 
 function toLogin(response){
-    if(response.status == 401 ){
+    if (!response) {
+        Message({message:'服务端未启动，找不到服务',type:'error'});
+        return;
+    }
+    if(!response.status || response.status == 401 ){
         _this.  router.push("/login");
         Message({message: '认证/授权 失败', type: 'error'});
         return;

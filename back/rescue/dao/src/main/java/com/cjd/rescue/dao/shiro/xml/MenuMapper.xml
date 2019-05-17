@@ -32,7 +32,7 @@
         <result column="parent_id" property="parent_id"></result>
         <collection property="children" select="queryMenuTree"
                     column="id"></collection>
-        <!--查到的cid作为下次的pid -->
+
     </resultMap>
 
 </mapper>

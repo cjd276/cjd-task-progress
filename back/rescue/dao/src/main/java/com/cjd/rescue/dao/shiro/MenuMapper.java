@@ -7,7 +7,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface MenuMapper extends Mapper<Menu>{
-    List<Menu> queryMenuTree(String parent_id);
+    List<Menu> queryMenuTree(@Param("parent_id") String parent_id);
 
     List<Menu> queryCheckedMenuTree(@Param("role_id") String role_id);
 
