@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
   `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
   `plan_id` varchar(50) NOT NULL COMMENT '计划id',
+  `plan_name` varchar(50) NOT NULL COMMENT '计划名称',
   `task_process_id` varchar(50) NOT NULL COMMENT '任务进度   0 开发前准备  1 开发中 2 自测中 3 sit 4 uat 5 pre 6 sandbox 7 已完成',
   `task_process_name` varchar(50) NOT NULL,
   `branch` varchar(50) NOT NULL COMMENT '分支',

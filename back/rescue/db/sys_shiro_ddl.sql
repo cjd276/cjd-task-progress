@@ -17,15 +17,29 @@ CREATE DATABASE IF NOT EXISTS `rescue` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `rescue`;
 
 -- 导出  表 rescue.sys_key_value 结构
-CREATE TABLE IF NOT EXISTS `sys_key_value` (
+CREATE TABLE `sys_key_value` (
   `id` varchar(50) NOT NULL COMMENT '主键',
   `bond` varchar(50) NOT NULL COMMENT '属性键',
   `associate` varchar(50) NOT NULL COMMENT '关联id',
   `val` varchar(2000) NOT NULL COMMENT '属性值',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `kv_type_key` varchar(32) NOT NULL,
+  `kv_type_name` varchar(8) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表';
+
+
+CREATE TABLE `kv_type` (
+  `id` varchar(50) NOT NULL COMMENT '主键',
+  `kv_type_name` varchar(8) NOT NULL COMMENT '动态属性类型名称',
+  `kv_type_key` varchar(32) NOT NULL COMMENT '动态属性类型key',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `kv_sort` int(11) NOT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='动态属性类型表';
+
 
 -- 数据导出被取消选择。
 -- 导出  表 rescue.sys_menu 结构

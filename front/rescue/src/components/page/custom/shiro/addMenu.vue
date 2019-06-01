@@ -34,7 +34,7 @@
 					  </el-select>
 				  </el-form-item>
 				  
-				  <el-form-item label="父菜单" prop="parent">
+				  <el-form-item label="父菜单" prop="parent" v-model="mtemp">
 				    <el-tree
 					  :data="treeData"
 					  node-key="id"
@@ -84,7 +84,15 @@
 
 	export default{
 		data(){
+		    const validateTree = (rule, value, callback) => {
+		      if (this.mtemp == 1) {
+		        callback()
+		      } else {
+		        callback(new Error('请选择父菜单'))
+		      }
+		    }
 			return {
+				mtemp:"",
 				tprops:{
 					label:"menu_name",
 					children:"children"
@@ -106,6 +114,7 @@
 		          children: 'children',
 		          label: 'label'
 		        },
+		     
 		        rules: {
 	              icon: [
 	                { required: true, message: '请输入菜单图标', trigger: 'blur' },
@@ -120,7 +129,7 @@
 	                { required: true, message: '请选择菜单类型', trigger: 'blur' },
 	              ],
 	              parent: [
-	                { required: true, message: '请选择父菜单', trigger: 'blur' },
+	                { required: true, validator: validateTree, trigger: 'blur' },
 	              ],
 	              menu_name: [
 	                { required: true, message: '请输入菜单名称', trigger: 'blur' },
@@ -181,6 +190,7 @@
 				}
 			},	
 			nodeClick(item, node, self){
+				this.mtemp = 1;
 				this.editCheckId = item.id;
 				this.$refs.tree.setCheckedKeys([item.id]);
 			}	

@@ -58,7 +58,7 @@ function dataPost(apiName, params, callback){
         
         //根据后端实际返回修改
         if(all.code=="000000"){ //成功
-            Message({message: "请求成功", type: 'success'});
+            //Message({message: "请求成功", type: 'success'});
             if(callback) callback(resultMap);
         }else{ //失败
             console.log(all.code, all.msg);
@@ -154,7 +154,7 @@ function toLogin(response){
     }
     if(!response.status || response.status == 401 ){
         _this.  router.push("/login");
-        Message({message: '认证/授权 失败', type: 'error'});
+        Message({message: '认证/授权 失败/过期', type: 'error'});
         return;
     }
 }

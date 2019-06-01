@@ -1,0 +1,1 @@
+insert into `kv_type` ( `kv_sort`, `id`, `kv_type_name`, `kv_type_key`, `create_time`, `modify_time`) values ( '1', 'sys_1', '散列属性', 'slproperties', '2019-06-01 18:21:59', '2019-06-01 19:07:14');

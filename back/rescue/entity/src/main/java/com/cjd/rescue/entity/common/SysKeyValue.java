@@ -15,6 +15,10 @@ public class SysKeyValue extends BaseObject{
 
     private String associate;
 
+    private String kv_type_key;
+
+    private String kv_type_name;
+
     private Date create_time;
 
     private Date modify_time;
@@ -66,5 +70,21 @@ public class SysKeyValue extends BaseObject{
 
     public void setAssociate(String associate) {
         this.associate = associate;
+    }
+
+    public String getKv_type_key() {
+        return kv_type_key;
+    }
+
+    public void setKv_type_key(String kv_type_key) {
+        this.kv_type_key = kv_type_key;
+    }
+
+    public String getKv_type_name() {
+        return kv_type_name;
+    }
+
+    public void setKv_type_name(String kv_type_name) {
+        this.kv_type_name = kv_type_name;
     }
 }

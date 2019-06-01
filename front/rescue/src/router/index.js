@@ -220,6 +220,11 @@ export default new Router({
                     path: '/scheduleSetting',
                     component: resolve => require(['../components/page/custom/task/scheduleSetting.vue'], resolve),
                     meta: { title: '任务进度设置' }
+                },
+                {
+                    path: '/kvTypeSettings',
+                    component: resolve => require(['../components/page/custom/common/kvTypeSettings.vue'], resolve),
+                    meta: { title: '动态属性类型设置' }
                 }
 
 
