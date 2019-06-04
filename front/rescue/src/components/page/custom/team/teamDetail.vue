@@ -17,6 +17,9 @@
                     <el-form-item label="工程名称">
                         <el-input v-model="project.code"></el-input>
                     </el-form-item>
+                    <el-form-item label="钉钉通知">
+                        <el-input v-model="project.ding_url"></el-input>
+                    </el-form-item>
                 </el-form>
             </div>
         </div>

@@ -20,6 +20,9 @@ public class TaskProcess {
     @Transient
     private Date end_notice_time;
 
+    @Transient
+    private String task_process_setting_id;
+
 
     private Date create_time;
 
@@ -80,5 +83,13 @@ public class TaskProcess {
 
     public void setTeam_id(String team_id) {
         this.team_id = team_id;
+    }
+
+    public String getTask_process_setting_id() {
+        return task_process_setting_id;
+    }
+
+    public void setTask_process_setting_id(String task_process_setting_id) {
+        this.task_process_setting_id = task_process_setting_id;
     }
 }

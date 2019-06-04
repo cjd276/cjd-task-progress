@@ -65,7 +65,7 @@
                 var permissions = JSON.parse(localStorage.getItem('permissions'));
                 if(permissions && permissions.length >0 ){
                     for (var i = permissions.length - 1; i >= 0; i--) {
-                        if(permissions[i].permission_code == permission_code){
+                        if(null != permissions[i] && permissions[i].permission_code == permission_code){
                             return true;
                         }
                     }

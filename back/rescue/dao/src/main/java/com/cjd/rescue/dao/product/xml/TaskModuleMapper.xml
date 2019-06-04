@@ -25,4 +25,13 @@
     </resultMap>
 
 
+    <select id="selectModules" resultType="com.cjd.rescue.entity.product.Module">
+
+        select m.* from
+        (select * from task_module tm where tm.task_id in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item.id}
+            </foreach>
+        ) tmtemp left join `module` m on m.id=tmtemp.module_id
+    </select>
+
 </mapper>

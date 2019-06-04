@@ -18,14 +18,15 @@ USE `rescue`;
 
 -- 导出  表 rescue.module 结构
 CREATE TABLE IF NOT EXISTS `module` (
-  `id` varchar(50) DEFAULT NULL,
-  `project_id` varchar(50) DEFAULT NULL COMMENT '工程id',
-  `name` varchar(50) DEFAULT NULL COMMENT '模块名称',
-  `code` varchar(50) DEFAULT NULL COMMENT 'war包名称',
-  `operate` text COMMENT '操作步骤模板',
-  `operate_return` text COMMENT '回滚模板',
+  `id` varchar(50) NOT NULL,
+  `project_id` varchar(50) NOT NULL COMMENT '工程id',
+  `name` varchar(50) NOT NULL COMMENT '模块名称',
+  `code` varchar(50) NOT NULL COMMENT 'war包名称',
+  `operate` text DEFAULT NULL COMMENT '操作步骤模板',
+  `operate_return` DEFAULT NULL text COMMENT '回滚模板',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
@@ -94,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `task_process` (
   `id` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL COMMENT '阶段目标',
   `team_id` varchar(50) NOT NULL,
-  `weight` int(11) NOT NULL COMMENT '进度权重（百分制）',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `process_sort` int(11) DEFAULT NULL,
@@ -130,6 +130,9 @@ CREATE TABLE IF NOT EXISTS `user_task` (
 CREATE TABLE IF NOT EXISTS `user_team` (
   `id` varchar(50) NOT NULL,
   `user_id` varchar(50) NOT NULL COMMENT '用户id',
+  `team_id` varchar(50) NOT NULL COMMENT '组id',
+  `username` varchar(50) NOT NULL COMMENT '用户名',
+  `taskname` varchar(50) NOT NULL COMMENT '任务名称',
   `team_id` varchar(50) NOT NULL COMMENT '组id',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

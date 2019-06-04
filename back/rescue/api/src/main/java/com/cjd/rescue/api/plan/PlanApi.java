@@ -14,4 +14,6 @@ public interface PlanApi {
     ReturnT delete(Plan plan);
 
     ReturnT get(Plan plan);
+
+    ReturnT getOnLineInfo(Plan plan);
 }

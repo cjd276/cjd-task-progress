@@ -5,22 +5,20 @@ import com.cjd.rescue.common.anno.SysLog;
 import com.cjd.rescue.common.util.IdUtil;
 import com.cjd.rescue.dao.anno.JDBCException;
 import com.cjd.rescue.dao.common.SysKeyValueMapper;
-import com.cjd.rescue.dao.product.ModuleMapper;
-import com.cjd.rescue.dao.product.PlanMapper;
+import com.cjd.rescue.dao.product.*;
 import com.cjd.rescue.entity.common.Err;
 import com.cjd.rescue.entity.common.ReturnT;
 import com.cjd.rescue.entity.common.SysKeyValue;
 import com.cjd.rescue.entity.common.TypeOfKV;
-import com.cjd.rescue.entity.product.AddPlanParams;
-import com.cjd.rescue.entity.product.Plan;
-import com.cjd.rescue.entity.product.Team;
+import com.cjd.rescue.entity.product.*;
 import com.cjd.rescue.product.ding.DingDingRobot;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -39,6 +37,16 @@ public class PlanService implements PlanApi{
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private TaskMapper taskMapper;
+
+    @Autowired
+    private TaskModuleMapper taskModuleMapper;
+
+    @Autowired
+    private ProjectMapper projectMapper;
+
 
     @SysLog
     @JDBCException
@@ -107,5 +115,39 @@ public class PlanService implements PlanApi{
 
 
         return ReturnT.result(Err.SUCCESS).dataMap("sysKeyValues",sysKeyValues).dataMap("plan",planTemp);
+    }
+
+    @Override
+    public ReturnT getOnLineInfo(Plan plan) {
+
+        List<Map> versions = new ArrayList<>();
+
+        Plan planResult = planMapper.selectByPrimaryKey(plan);
+
+
+
+        Example example = new Example(Task.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("plan_id",plan.getId());
+
+        List<Task> tasks = taskMapper.selectByExample(example);
+
+        List<Module> modules = taskModuleMapper.selectModules(tasks);
+
+        List<Project> projects = new ArrayList<>();
+        Set<String> project_ids = new HashSet<>();
+        if(null != modules && modules.size() > 0){
+            for (Module module:modules){
+                project_ids.add(module.getProject_id());
+            }
+            Example examplep = new Example(Project.class);
+            Example.Criteria criteriap = example.createCriteria();
+            criteriap.andEqualTo("id",project_ids);
+            projects= projectMapper.selectByExample(examplep);
+        }
+
+
+
+        return ReturnT.result(Err.SUCCESS).dataMap("tasks",tasks).dataMap("modules",modules).dataMap("projects",projects);
     }
 }

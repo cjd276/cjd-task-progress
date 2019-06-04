@@ -41,6 +41,9 @@
                       <el-form-item label="回退模板" prop="operate_return">
                         <el-input type="textarea"  v-model="module.operate_return"></el-input>
                       </el-form-item>
+                      <el-form-item label="服务监控项" prop="service_monitor">
+                        <el-input type="textarea"  v-model="module.service_monitor"></el-input>
+                      </el-form-item>
                       <div class="moduleDyna">
                        <dynamicProperties :title="'项目/模块'" :ref="'addModuleDyna'+index" :isEdit="isEdit"/>
                      </div>
@@ -90,12 +93,6 @@
               ],
               code: [
                 { required: true, message: '请输入模块war名称', trigger: 'blur' },
-              ],
-              operate: [
-                { required: true, message: '请输入操作模板', trigger: 'blur' },
-              ],
-              operate_return: [
-                { required: true, message: '请输入回退模板', trigger: 'blur' },
               ]
 
             }

@@ -225,6 +225,11 @@ export default new Router({
                     path: '/kvTypeSettings',
                     component: resolve => require(['../components/page/custom/common/kvTypeSettings.vue'], resolve),
                     meta: { title: '动态属性类型设置' }
+                },
+                {
+                    path: '/onLineInfo',
+                    component: resolve => require(['../components/page/custom/plan/onLineInfo.vue'], resolve),
+                    meta: { title: '查看上线信息' }
                 }
 
 

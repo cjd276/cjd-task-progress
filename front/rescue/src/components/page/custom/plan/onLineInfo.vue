@@ -1,0 +1,82 @@
+<template>
+  <div>
+    
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>版本信息</span>
+      </div>
+      <div v-for="(item,index) in projects" :key="index" class="text item">
+        {{(index+1) +'、' + item.current_version_prefix + item.current_version }}
+      </div>
+    </el-card>
+    <el-card class="box-card mtop20">
+      <div slot="header" class="clearfix">
+        <span>上线内容</span>
+      </div>
+      <div v-for="(item,index) in tasks" :key="index" class="text item">
+        {{(index+1) +'、' + item.name }}
+      </div>
+    </el-card>
+    <el-card class="box-card mtop20">
+      <div slot="header" class="clearfix">
+        <span>服务监控项</span>
+      </div>
+      <div v-for="(item,index) in modules" :key="index" class="text item">
+        {{(index+1) +'、' + item.service_monitor}}
+      </div>
+    </el-card>
+    <el-card class="box-card mtop20" >
+      <div slot="header" class="clearfix">
+        <span>上线步骤</span>
+      </div>
+      <div v-for="(item,index) in modules" :key="index" class="text item">
+        {{(index+1) +'、' + item.operate}}
+      </div>
+    </el-card>
+    <el-card class="box-card mtop20">
+      <div slot="header" class="clearfix">
+        <span>回退方案</span>
+      </div>
+      <div v-for="(item,index) in modules" :key="index" class="text item">
+        {{(index+1) +'、' + item.operate_return}}
+      </div>
+    </el-card>
+  </div>
+</template>
+
+<script>
+
+  export default {
+    data() {
+      return {
+        tasks:[],
+        modules:[],
+        projects:[]
+      }
+    },
+    created() {
+      this.getOnLineInfo();
+    },
+    computed: {
+
+    },
+    methods: {
+      getOnLineInfo:function(){
+        var plan_id = this.$route.query.plan_id;
+          this.$dataPostXD("/plan/getOnLineInfo", {id: plan_id}, (resultMap)=>{
+                this.tasks = resultMap.tasks;
+                this.modules = resultMap.modules;
+                this.projects = resultMap.projects;
+            });
+
+      },
+    },
+
+  }
+</script>
+<style type="text/css" scoped>
+  
+  .mtop20{
+    margin-top: 20px;
+  }
+</style>

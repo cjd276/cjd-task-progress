@@ -44,4 +44,11 @@ public class PlanController {
     public ReturnT get(@RequestBody Plan plan){
         return planApi.get(plan);
     }
+
+    @RequestMapping("/getOnLineInfo")
+    @SysLog
+
+    public ReturnT getOnLineInfo(@RequestBody Plan plan){
+        return planApi.getOnLineInfo(plan);
+    }
 }

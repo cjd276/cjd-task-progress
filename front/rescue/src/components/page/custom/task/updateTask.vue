@@ -60,7 +60,7 @@
         </div>
         <div class="container">
           <div class="form-box">
-            <template v-for="(item,index) in taskProcessList">
+            <template v-for="(item,index) in taskProcess">
               <el-form :model="item" ref="processForm"  label-width="100px">
                 
                   <el-form-item label="进度名称">
@@ -126,24 +126,17 @@
         taskProcess:[],
         updateTaskBean:{},
         projectModuleList:[],
-        taskProcessList:[],
 
       }
     },
     created() {
       this.getTask();
       this.listProjectModuleList();
-      this.getTaskProcess();
+
     },
 
     methods: {
-      getTaskProcess:function(){
-        this.$dataPostXD("/taskProcess/list", {}, (resultMap)=>{
-
-                this.taskProcessList = resultMap.taskProcesses;
-
-            });
-      },     
+  
       getTask:function(){
         var task_id =  this.$route.query.id;
         this.updateTask["id"] = task_id;
@@ -162,9 +155,11 @@
           this.updateTaskBean['task_process_id'] = this.task.task_process.id;
            this.updateTaskBean['task_process_name'] = this.task.task_process.name;
           this.updateTaskBean['plan_id'] = this.task.plan_id;
+          this.updateTaskBean['name'] = this.task.name;
+          this.updateTaskBean['plan_name'] = this.task.plan_name;
           var task_id =  this.$route.query.id;
         var kvs = this.$refs.addProjectDyna.getKvs();
-        var params = {task:this.updateTaskBean,kvs:kvs,projects:this.projectModuleList,taskProcessList:this.taskProcessList}
+        var params = {task:this.updateTaskBean,kvs:kvs,projects:this.projectModuleList,taskProcessList:this.taskProcess}
         console.log(params)
         this.$dataPostXD("/task/update", params);
       },
@@ -187,7 +182,7 @@
     },
   }
 </script>
-<style type="text/css">
+<style type="text/css" scoped>
   
   .addProjectBtn{
     margin-top: 20px;

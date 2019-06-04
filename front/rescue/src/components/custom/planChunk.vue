@@ -7,6 +7,7 @@
 		<div v-if="isBtn==0" class="desc">{{planStatusAlter(item.plan_status)}}</div>
 		<el-button v-show="chunkDeleteShow" v-if="isBtn==0" icon="el-icon-delete" class="chunkDelete" @click.stop="deleteChunk(item)"></el-button>
 		<el-button style="margin-left:0px" v-show="chunkDeleteShow" v-if="isBtn==0" icon="el-icon-plus" class="chunkAddTask" @click.stop="addTask(item)"></el-button>
+		<el-button style="margin-left:0px" v-show="chunkDeleteShow" v-if="isBtn==0" icon="el-icon-document" class="chunkOnlineInfo" @click.stop="toOnlineInfo(item)"></el-button>
 	</div>
 </template>
 <script type="text/javascript">
@@ -72,6 +73,14 @@
 		addTask:function(item){
 			this.$router.push({
           	  path: "/addTask",
+	          query: {
+	            id: item.id
+	          }
+          })
+		},
+		toOnlineInfo:function(item){
+			this.$router.push({
+          	  path: "/onLineInfo",
 	          query: {
 	            id: item.id
 	          }
@@ -142,6 +151,15 @@
 	.chunkAddTask{
 		position: absolute;
     top: 0;
+    left: 0;
+        border: none;
+    opacity: 0.5;
+    background: none;
+
+	}
+	.chunkOnlineInfo{
+		position: absolute;
+    bottom : 0;
     left: 0;
         border: none;
     opacity: 0.5;

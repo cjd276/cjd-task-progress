@@ -121,11 +121,14 @@ public class MenuService implements MenueApi {
 
         if(null != menus && menus.size() > 0 ){
             for (Menu menu:menus){
-                RoleMenu temp = new RoleMenu();
-                temp.setId(IdUtil.generateID());
-                temp.setRole_id(role_id);
-                temp.setMenu_id(menu.getId());
-                roleMenuMapper.insertSelective(temp);
+                if(!"sys_1".equals(menu.getId())){
+                    RoleMenu temp = new RoleMenu();
+                    temp.setId(IdUtil.generateID());
+                    temp.setRole_id(role_id);
+                    temp.setMenu_id(menu.getId());
+                    roleMenuMapper.insertSelective(temp);
+                }
+
             }
         }
 

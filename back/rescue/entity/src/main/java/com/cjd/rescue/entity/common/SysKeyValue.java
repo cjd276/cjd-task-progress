@@ -15,7 +15,6 @@ public class SysKeyValue extends BaseObject{
 
     private String associate;
 
-    private String kv_type_key;
 
     private String kv_type_name;
 
@@ -72,13 +71,6 @@ public class SysKeyValue extends BaseObject{
         this.associate = associate;
     }
 
-    public String getKv_type_key() {
-        return kv_type_key;
-    }
-
-    public void setKv_type_key(String kv_type_key) {
-        this.kv_type_key = kv_type_key;
-    }
 
     public String getKv_type_name() {
         return kv_type_name;

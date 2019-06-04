@@ -25,6 +25,8 @@ public class Module extends BaseObject{
 
     private Date modify_time;
 
+    private String service_monitor;
+
     private String project_id;
     @Transient
     private boolean checked;
@@ -110,5 +112,13 @@ public class Module extends BaseObject{
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public String getService_monitor() {
+        return service_monitor;
+    }
+
+    public void setService_monitor(String service_monitor) {
+        this.service_monitor = service_monitor;
     }
 }

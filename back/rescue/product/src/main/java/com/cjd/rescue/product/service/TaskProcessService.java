@@ -9,14 +9,12 @@ import com.cjd.rescue.dao.common.SysKeyValueMapper;
 import com.cjd.rescue.dao.product.ModuleMapper;
 import com.cjd.rescue.dao.product.PlanMapper;
 import com.cjd.rescue.dao.product.TaskProcessMapper;
+import com.cjd.rescue.dao.product.TaskProcessSettingsMapper;
 import com.cjd.rescue.entity.common.Err;
 import com.cjd.rescue.entity.common.ReturnT;
 import com.cjd.rescue.entity.common.SysKeyValue;
 import com.cjd.rescue.entity.common.TypeOfKV;
-import com.cjd.rescue.entity.product.AddPlanParams;
-import com.cjd.rescue.entity.product.Plan;
-import com.cjd.rescue.entity.product.TaskProcess;
-import com.cjd.rescue.entity.product.Team;
+import com.cjd.rescue.entity.product.*;
 import com.cjd.rescue.entity.shiro.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +33,11 @@ public class TaskProcessService implements TaskProcessApi {
 
     @Autowired
     private TaskProcessMapper taskProcessMapper;
+
+    @Autowired
+    private TaskProcessSettingsMapper taskProcessSettingsMapper;
+
+
 
     @SysLog
     @JDBCException
@@ -82,4 +85,6 @@ public class TaskProcessService implements TaskProcessApi {
 
         return ReturnT.result(Err.SUCCESS).dataMap("taskProcesses",taskProcesses);
     }
+
+
 }

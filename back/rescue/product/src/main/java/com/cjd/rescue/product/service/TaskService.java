@@ -91,6 +91,7 @@ public class TaskService implements TaskApi {
         dingDingRobot.doSendAll(msg,team.getDing_url());
         return ReturnT.result(Err.SUCCESS);
     }
+    @Transactional
     @SysLog
     @JDBCException
     @Override
@@ -113,6 +114,7 @@ public class TaskService implements TaskApi {
 
         return ReturnT.result(Err.SUCCESS).dataMap("taskList",userList).dataMap("total",total);
     }
+    @Transactional
     @SysLog
     @JDBCException
     @Override
@@ -125,10 +127,35 @@ public class TaskService implements TaskApi {
         List sysKeyValues = sysKeyValueMapper.select(sysKeyValue);
 
         Example example = new Example(TaskProcess.class);
-        example.setOrderByClause("process_sort asc");
+        example.setOrderByClause("create_time asc");
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("team_id",task.getTeam_id());
         List<TaskProcess> taskProcesses = taskProcessMapper.selectByExample(example);
+
+        String task_id = task.getId();
+
+
+        Example exampleo = new Example(TaskProcessSettings.class);
+        exampleo.setOrderByClause("create_time asc");
+        Example.Criteria criteriao = exampleo.createCriteria();
+
+        criteriao.andEqualTo("task_id",task_id);
+
+        List<TaskProcessSettings> taskProcesseSettings = taskProcessSettingsMapper.selectByExample(example);
+
+        if(null != taskProcesses && taskProcesses.size() > 0 && null != taskProcesseSettings && taskProcesseSettings.size() > 0){
+            for (TaskProcess taskProcess:taskProcesses){
+                for (TaskProcessSettings taskProcessSettings:taskProcesseSettings){
+                    if(taskProcess.getId().equals(taskProcessSettings.getTask_process_id())){
+                        taskProcess.setEnd_notice_time(taskProcessSettings.getEnd_notice_time());
+                        taskProcess.setTask_process_setting_id(taskProcessSettings.getId());
+
+                    }
+                }
+            }
+        }
+
+
 
 
         return ReturnT.result(Err.SUCCESS).dataMap("sysKeyValues",sysKeyValues).dataMap("task",temp).dataMap("taskProcesses",taskProcesses);
@@ -263,7 +290,7 @@ public class TaskService implements TaskApi {
 
         return ReturnT.result(Err.SUCCESS);
     }
-
+    @Transactional
     @SysLog
     @JDBCException
     @Override
@@ -274,7 +301,9 @@ public class TaskService implements TaskApi {
 
         return ReturnT.result(Err.SUCCESS).dataMap("userList",userList);
     }
-
+    @Transactional
+    @SysLog
+    @JDBCException
     @Override
     public ReturnT listProjectModuleList(Task task) {
         String team_id = task.getTeam_id();

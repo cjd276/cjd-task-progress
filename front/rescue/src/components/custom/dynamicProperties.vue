@@ -25,7 +25,7 @@
                      </el-form-item>
                     <template v-for="(item,index) in textField">
                       <el-form-item>
-                        <el-input slot="label" v-model="textField[index]['bond']" disabled></el-input>
+                        <el-input slot="label" v-model="textField[index]['bond']"></el-input>
                         <el-input v-model="item.val" style="width:60%"></el-input>
                         <el-tag type="info" class="tagxz" effect="plain" size="medium">{{item.kv_type_name}}</el-tag>
                         <el-button v-if="isEdit==1" plain  @click="deleteText(index)" class="lef20">删除属性</el-button>
@@ -35,7 +35,7 @@
                     
                    <template v-for="(item,index) in dateField">
                     <el-form-item>
-                      <el-input slot="label" v-model="item.bond" disabled></el-input>
+                      <el-input slot="label" v-model="item.bond"></el-input>
                       
                             <el-date-picker type="date" placeholder="选择日期" v-model="item.val" style="width: 60%;"></el-date-picker>
                        
@@ -45,14 +45,14 @@
                   </template>
                   
                     <el-form-item v-for="(item,index) in switchField" :key="index">
-                      <el-input slot="label" v-model="item.bond" disabled></el-input>
+                      <el-input slot="label" v-model="item.bond"></el-input>
                       <el-switch v-model="item.val"></el-switch>
                       <el-tag type="info" class="tagxz" effect="plain" size="medium">{{item.kv_type_name}}</el-tag>
                        <el-button v-if="isEdit==1" plain  @click="deleteSwitch(index)" class="lef20">删除属性</el-button>
                     </el-form-item>
                     <template v-for="(item,index) in textAreaField">
                       <el-form-item>
-                        <el-input slot="label" v-model="textAreaField[index]['bond']" disabled></el-input>
+                        <el-input slot="label" v-model="textAreaField[index]['bond']"></el-input>
 
                         <el-input  type="textarea" v-model="item.val" style="width:60%;float: left;"></el-input>
                         <el-tag type="info" class="tagxz" effect="plain" size="medium" style="float: left;">{{item.kv_type_name}}</el-tag>

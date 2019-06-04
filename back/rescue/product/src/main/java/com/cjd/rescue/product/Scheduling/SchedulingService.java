@@ -64,6 +64,11 @@ public class SchedulingService{
                     Team team = teamMapper.selectByPrimaryKey(teamParam);
                     String sendUrl = team.getDing_url();
                     dingDingRobot.doSendPhones(contentMap,phones,sendUrl);
+
+                    TaskProcessSettings updateBean = new TaskProcessSettings();
+                    updateBean.setId(tps.getId());
+                    updateBean.setNeed_notice("0");
+                    taskProcessSettingsMapper.updateByPrimaryKeySelective(updateBean);
                 }
             }
         }

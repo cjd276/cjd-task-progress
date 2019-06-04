@@ -1,11 +1,13 @@
 package com.cjd.rescue.entity.product;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
 @Table(name = "task_process_settings")
 public class TaskProcessSettings {
 
+    @Id
     private String id;
 
     private String task_name;
