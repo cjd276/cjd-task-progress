@@ -230,6 +230,11 @@ export default new Router({
                     path: '/onLineInfo',
                     component: resolve => require(['../components/page/custom/plan/onLineInfo.vue'], resolve),
                     meta: { title: '查看上线信息' }
+                },
+                {
+                    path: '/projectModify',
+                    component: resolve => require(['../components/page/custom/projectModify.vue'], resolve),
+                    meta: { title: '编辑项目' }
                 }
 
 

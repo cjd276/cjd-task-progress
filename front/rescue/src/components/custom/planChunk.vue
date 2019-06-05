@@ -82,7 +82,7 @@
 			this.$router.push({
           	  path: "/onLineInfo",
 	          query: {
-	            id: item.id
+	            plan_id: item.id
 	          }
           })
 		}

@@ -5,6 +5,7 @@
 		<div v-if="isBtn==0" class="desc">{{item.name}}</div>
 		<div v-else class="desc">{{title}}</div>
 		<el-button v-show="chunkDeleteShow" v-if="isBtn==0" icon="el-icon-delete" class="chunkDelete" @click.stop="deleteChunk(item)"></el-button>
+		<el-button v-show="chunkDeleteShow" v-if="isBtn==0" icon="el-icon-edit" class="chunkModify" @click.stop="modifyChunk(item)"></el-button>
 	</div>
 </template>
 <script type="text/javascript">
@@ -51,14 +52,17 @@
 		},
 		deleteChunk:function(item){
 			this.$emit('deleteChunk',item);
-		}
+		},
+		modifyChunk:function(item){
+			this.$emit('modifyChunk',item);
+		},
 	}
 }
 </script>
 
 
 
-<style type="text/css">
+<style type="text/css" scoped>
 	.chunkContainer{
 		width: 200px;
     height: 80px;
@@ -107,5 +111,14 @@
         border: none;
     opacity: 0.5;
     background: none;
+	}
+		.chunkModify{
+		position: absolute;
+    top: 0;
+    left: 0;
+        border: none;
+    opacity: 0.5;
+    background: none;
+    margin: 0px !important;
 	}
 </style>

@@ -6,7 +6,10 @@
         <span>版本信息</span>
       </div>
       <div v-for="(item,index) in projects" :key="index" class="text item">
-        {{(index+1) +'、' + item.current_version_prefix + item.current_version }}
+        {{(index+1) +'、' + item.code + ':'}}
+        <template v-for="mitem in modules" v-if="mitem.operate != null ">
+          {{item.current_version_prefix + mitem.code + '_' +item.current_version + '_' + onLineDate +'、'}}
+        </template>
       </div>
     </el-card>
     <el-card class="box-card mtop20">
@@ -30,7 +33,9 @@
         <span>上线步骤</span>
       </div>
       <div v-for="(item,index) in modules" :key="index" class="text item">
+  
         {{(index+1) +'、' + item.operate}}
+    
       </div>
     </el-card>
     <el-card class="box-card mtop20">
@@ -51,7 +56,8 @@
       return {
         tasks:[],
         modules:[],
-        projects:[]
+        projects:[],
+        onLineDate:''
       }
     },
     created() {
@@ -67,6 +73,7 @@
                 this.tasks = resultMap.tasks;
                 this.modules = resultMap.modules;
                 this.projects = resultMap.projects;
+                this.onLineDate = resultMap.onLineDate;
             });
 
       },

@@ -14,4 +14,6 @@ public interface ProductApi {
     ReturnT delete(Project project);
 
     ReturnT get(Project project);
+
+    ReturnT modify(AddProjectParams addProjectParams);
 }

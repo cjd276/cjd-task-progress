@@ -37,7 +37,7 @@
 
     <module :title="'项目'" :isEdit="1" ref="addModules"/>
 
-    <el-button class="addProjectBtn" plain  @click="addProject">添加项目</el-button>
+    <el-button class="addProjectBtn" plain  @click="addProject">编辑项目</el-button>
   </div>
 </template>
 <script>
@@ -66,11 +66,23 @@
       }
     },
     created() {
-
+      this.getProject();
     },
 
     methods: {
       
+         getProject:function(){
+        var params = {id:this.$route.query.id};
+        var _this = this;
+        this.$dataPostXD("/project/get", params, (resultMap)=>{
+          _this.project = resultMap.project;
+          _this.$refs.addProjectDyna.setKvs(resultMap.sysKeyValues)
+          _this.$refs.addModules.setModules(resultMap.modules)
+  
+          
+        });
+      },
+    
       addProject:function(){
         var _this = this;
         this.$refs["projectForm"].validate((valid) => {
@@ -79,7 +91,7 @@
                 if(_this.$refs.addModules.getModules()){
                   var modules = this.$refs.addModules.getModules();
                   var params = {project:_this.project,kvs:kvs,modules:modules}
-                  _this.$dataPostXD("/project/add", params);
+                  _this.$dataPostXD("/project/modify", params);
                 }
                 
 

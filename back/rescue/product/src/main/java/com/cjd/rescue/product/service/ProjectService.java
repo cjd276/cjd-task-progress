@@ -19,6 +19,7 @@ import com.cjd.rescue.entity.product.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -67,39 +68,49 @@ public class ProjectService implements ProductApi{
         Team team = teamService.getCurrentUserTeam();
         if(null != team){
             project.setTeam_id(team.getId());
+            project.setTeam_name(team.getName());
         }else{
             return ReturnT.result(Err.NONE_TEAM);
         }
-        List<SysKeyValue> list = addProjectParams.getKvs();
-
-        List<Module> modules = addProjectParams.getModules();
         projectMapper.insertSelective(project);
-        if(null != list && list.size() > 0){
-            for(SysKeyValue sysKeyValue:list){
-                sysKeyValue.setAssociate(TypeOfKV.PROJECT.getPrefix() + project.getId());
-                sysKeyValue.setId(IdUtil.generateID());
-                sysKeyValueMapper.insertSelective(sysKeyValue);
-            }
-        }
-        if(null != modules && modules.size() > 0){
-            for(Module module:modules){
-                String moduleId = IdUtil.generateID();
-                module.setId(moduleId);
-                module.setProject_id(project.getId());
 
-                moduleMapper.insertSelective(module);
-
-                List<SysKeyValue> sysKeyValues =  module.getSysKeyValues();
-                if(null != sysKeyValues && sysKeyValues.size() > 0){
-                    for(SysKeyValue sysKeyValue:sysKeyValues){
-                        sysKeyValue.setAssociate(TypeOfKV.MODULE.getPrefix() + moduleId);
-                        sysKeyValue.setId(IdUtil.generateID());
-                        sysKeyValueMapper.insertSelective(sysKeyValue);
-                    }
-                }
-            }
-        }
-
+//        List<SysKeyValue> list = addProjectParams.getKvs();
+//
+//        List<Module> modules = addProjectParams.getModules();
+//
+//        if(null != list && list.size() > 0){
+//            Example example =new Example(SysKeyValue.class);
+//            Example.Criteria criteria = example.createCriteria();
+//            criteria.andEqualTo("associate",TypeOfKV.PROJECT+project.getId());
+//            sysKeyValueMapper.deleteByExample(example);
+//
+//            for(SysKeyValue sysKeyValue:list){
+//                sysKeyValue.setAssociate(TypeOfKV.PROJECT.getPrefix() + project.getId());
+//                sysKeyValue.setId(IdUtil.generateID());
+//                sysKeyValueMapper.insertSelective(sysKeyValue);
+//            }
+//        }
+//        if(null != modules && modules.size() > 0){
+//            for(Module module:modules){
+//
+//
+//                String moduleId = IdUtil.generateID();
+//                module.setId(moduleId);
+//                module.setProject_id(project.getId());
+//
+//                moduleMapper.insertSelective(module);
+//
+//                List<SysKeyValue> sysKeyValues =  module.getSysKeyValues();
+//                if(null != sysKeyValues && sysKeyValues.size() > 0){
+//                    for(SysKeyValue sysKeyValue:sysKeyValues){
+//                        sysKeyValue.setAssociate(TypeOfKV.MODULE.getPrefix() + moduleId);
+//                        sysKeyValue.setId(IdUtil.generateID());
+//                        sysKeyValueMapper.insertSelective(sysKeyValue);
+//                    }
+//                }
+//            }
+//        }
+        handle(addProjectParams);
 
         return ReturnT.result(Err.SUCCESS);
     }
@@ -135,11 +146,91 @@ public class ProjectService implements ProductApi{
                 moduleTemp.setSysKeyValues(sysKeyValueModuleList);
             }
         }
-        Team teamParam = new Team();
-        teamParam.setId(project1.getTeam_id());
-        Team teamResult = teamMapper.selectByPrimaryKey(teamParam);
 
 
-        return ReturnT.result(Err.SUCCESS).dataMap("sysKeyValues",sysKeyValues).dataMap("project",project1).dataMap("modules",modules).dataMap("team",teamResult);
+
+        return ReturnT.result(Err.SUCCESS).dataMap("sysKeyValues",sysKeyValues).dataMap("project",project1).dataMap("modules",modules);
+    }
+
+    @SysLog
+    @JDBCException
+    @Override
+    public ReturnT modify(AddProjectParams addProjectParams) {
+        Project project = addProjectParams.getProject();
+        projectMapper.updateByPrimaryKeySelective(project);
+
+        Example example = new Example(Module.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("project_id",project.getId());
+        Module moduleTemp = new Module();
+        moduleTemp.setIs_delete("1");
+
+        moduleMapper.updateByExampleSelective(moduleTemp,example);
+
+
+        this.handle(addProjectParams);
+
+
+        return ReturnT.result(Err.SUCCESS);
+    }
+
+    private void handle(AddProjectParams addProjectParams){
+        Project project = addProjectParams.getProject();
+        List<SysKeyValue> list = addProjectParams.getKvs();
+
+        List<Module> modules = addProjectParams.getModules();
+
+        if(null != list && list.size() > 0){
+            Example example =new Example(SysKeyValue.class);
+            Example.Criteria criteria = example.createCriteria();
+            criteria.andEqualTo("associate",TypeOfKV.PROJECT+project.getId());
+            sysKeyValueMapper.deleteByExample(example);
+
+            for(SysKeyValue sysKeyValue:list){
+                sysKeyValue.setAssociate(TypeOfKV.PROJECT.getPrefix() + project.getId());
+                sysKeyValue.setId(IdUtil.generateID());
+                sysKeyValueMapper.insertSelective(sysKeyValue);
+            }
+        }
+        if(null != modules && modules.size() > 0){
+            for(Module module:modules){
+
+                if(null != module.getId()){
+                    module.setIs_delete("0");
+                    moduleMapper.updateByPrimaryKeySelective(module);
+
+                    List<SysKeyValue> sysKeyValues =  module.getSysKeyValues();
+                    Example example = new Example(SysKeyValue.class);
+                    Example.Criteria criteria = example.createCriteria();
+                    criteria.andEqualTo("associate",TypeOfKV.MODULE+module.getId());
+                    sysKeyValueMapper.deleteByExample(example);
+                    if(null != sysKeyValues && sysKeyValues.size() > 0){
+
+                        for(SysKeyValue sysKeyValue:sysKeyValues){
+                            sysKeyValue.setAssociate(TypeOfKV.MODULE.getPrefix() + module.getId());
+                            sysKeyValue.setId(IdUtil.generateID());
+                            sysKeyValueMapper.insertSelective(sysKeyValue);
+                        }
+                    }
+
+                }else{
+                    String moduleId = IdUtil.generateID();
+                    module.setId(moduleId);
+                    module.setProject_id(project.getId());
+
+                    moduleMapper.insertSelective(module);
+
+                    List<SysKeyValue> sysKeyValues =  module.getSysKeyValues();
+                    if(null != sysKeyValues && sysKeyValues.size() > 0){
+                        for(SysKeyValue sysKeyValue:sysKeyValues){
+                            sysKeyValue.setAssociate(TypeOfKV.MODULE.getPrefix() + moduleId);
+                            sysKeyValue.setId(IdUtil.generateID());
+                            sysKeyValueMapper.insertSelective(sysKeyValue);
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }

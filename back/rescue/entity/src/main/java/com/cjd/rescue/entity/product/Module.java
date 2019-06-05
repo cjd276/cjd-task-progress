@@ -3,6 +3,7 @@ package com.cjd.rescue.entity.product;
 import com.cjd.rescue.entity.common.BaseObject;
 import com.cjd.rescue.entity.common.SysKeyValue;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Table(name = "module")
 public class Module extends BaseObject{
-
+    @Id
     private String id;
 
     private String name;
@@ -27,6 +28,8 @@ public class Module extends BaseObject{
 
     private String service_monitor;
 
+
+    private String is_delete;
     private String project_id;
     @Transient
     private boolean checked;
@@ -120,5 +123,13 @@ public class Module extends BaseObject{
 
     public void setService_monitor(String service_monitor) {
         this.service_monitor = service_monitor;
+    }
+
+    public String getIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(String is_delete) {
+        this.is_delete = is_delete;
     }
 }

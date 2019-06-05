@@ -6,7 +6,7 @@
     
 
     <select id="listProjectModuleList" parameterType="java.lang.String" resultMap="pm">
-      select p.id,p.name,p.code,p.current_version,m.id AS mid,m.name AS mname,m.code AS mcode,m.project_id FROM pro_project p LEFT JOIN module m ON p.id = m.project_id WHERE p.team_id=#{team_id}
+      select p.id,p.name,p.code,p.current_version,m.id AS mid,m.name AS mname,m.code AS mcode,m.project_id FROM pro_project p LEFT JOIN module m ON p.id = m.project_id WHERE p.team_id=#{team_id} and p.is_delete='0' and m.is_delete='0'
     </select>
 
     <resultMap id="pm" type="com.cjd.rescue.entity.product.Project">
@@ -14,11 +14,13 @@
         <result column="name" property="name"></result>
         <result column="code" property="code"></result>
         <result column="current_version" property="current_version"></result>
+        <result column="is_delete" property="is_delete"></result>
         <!--关联属性的映射关系-->
-        <collection property="modules" ofType="com.cjd.rescue.entity.product.Module">
-            <id column="project_id"/>
+        <collection property="modules" column="project_id" ofType="com.cjd.rescue.entity.product.Module">
+
             <result column="mname" property="name"/>
             <result column="project_id" property="project_id"></result>
+            <result column="mis_delete" property="is_delete"></result>
             <result column="mcode" property="code"></result>
             <result column="mid" property="id"></result>
         </collection>
@@ -31,7 +33,7 @@
         (select * from task_module tm where tm.task_id in
             <foreach collection="list" index="index" item="item" open="(" separator="," close=")">#{item.id}
             </foreach>
-        ) tmtemp left join `module` m on m.id=tmtemp.module_id
+        ) tmtemp left join `module` m on m.id=tmtemp.module_id where m.is_delete='0'
     </select>
 
 </mapper>

@@ -29,6 +29,15 @@ public class ProjectController {
         return productApi.add(addProjectParams);
     }
 
+    @RequestMapping("/modify")
+    @SysLog
+
+    public ReturnT modify(@RequestBody AddProjectParams addProjectParams){
+        return productApi.modify(addProjectParams);
+    }
+
+
+
     @RequestMapping("/delete")
     @SysLog
 

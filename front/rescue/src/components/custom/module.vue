@@ -32,7 +32,7 @@
                     <el-form-item label="模块名称" prop="name">
                         <el-input v-model="module.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="模块war名称" prop="code">
+                    <el-form-item label="模块包名称" prop="code">
                         <el-input v-model="module.code"></el-input>
                     </el-form-item>
                     <el-form-item label="操作模板" prop="operate">

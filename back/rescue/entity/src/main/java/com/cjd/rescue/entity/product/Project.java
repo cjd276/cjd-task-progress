@@ -29,6 +29,9 @@ public class Project  extends BaseObject {
     private String current_version;
     private String current_version_prefix;
 
+    private String team_name;
+
+
 
     @Transient
     private List<Module> modules;
@@ -115,5 +118,13 @@ public class Project  extends BaseObject {
 
     public void setModules(List<Module> modules) {
         this.modules = modules;
+    }
+
+    public String getTeam_name() {
+        return team_name;
+    }
+
+    public void setTeam_name(String team_name) {
+        this.team_name = team_name;
     }
 }

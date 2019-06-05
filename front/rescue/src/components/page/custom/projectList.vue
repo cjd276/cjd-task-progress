@@ -3,7 +3,7 @@
     <div class="filter-container">
       <chunk :isBtn="1" @chunkClick="chunkClick" />
       <template v-for="item in list">
-        <chunk :isBtn="0" :item="item" @chunkClick="chunkClick" @deleteChunk="deleteChunk"/>
+        <chunk :isBtn="0" :item="item" @chunkClick="chunkClick" @deleteChunk="deleteChunk" @modifyChunk="modifyChunk"/>
       </template>
     </div>
   </div>
@@ -43,6 +43,14 @@
             });
 
 
+      },
+      modifyChunk:function(item){
+        this.$router.push({
+          path: "/projectModify",
+          query: {
+            id: item.id
+          }
+          })
       },
       getProjectList:function(){
           this.$dataPostXD("/project/list", {levels: 1}, (resultMap)=>{

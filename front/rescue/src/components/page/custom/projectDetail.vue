@@ -19,7 +19,7 @@
                     </el-form-item>
 
                     <el-form-item label="战队">
-                        <el-input v-model="team.name"></el-input>
+                        <el-input v-model="project.team_name"></el-input>
                     </el-form-item>
                     <el-form-item label="版本">
                         <el-input v-model="project.current_version"></el-input>
@@ -53,7 +53,7 @@
     data() {
       return {
         project:{},      
-        team:{},
+
       }
     },
     created() {
@@ -69,9 +69,7 @@
           _this.project = resultMap.project;
           _this.$refs.addProjectDyna.setKvs(resultMap.sysKeyValues)
           _this.$refs.addModules.setModules(resultMap.modules)
-          if(resultMap.team){
-            _this.team = resultMap.team;
-          }
+       
           
         });
       }

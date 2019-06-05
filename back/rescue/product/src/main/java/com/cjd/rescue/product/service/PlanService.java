@@ -2,6 +2,7 @@ package com.cjd.rescue.product.service;
 
 import com.cjd.rescue.api.plan.PlanApi;
 import com.cjd.rescue.common.anno.SysLog;
+import com.cjd.rescue.common.util.DateUtil;
 import com.cjd.rescue.common.util.IdUtil;
 import com.cjd.rescue.dao.anno.JDBCException;
 import com.cjd.rescue.dao.common.SysKeyValueMapper;
@@ -124,7 +125,8 @@ public class PlanService implements PlanApi{
 
         Plan planResult = planMapper.selectByPrimaryKey(plan);
 
-
+        Date date = planResult.getExpect_time();
+        String onLineDate = DateUtil.formatDateTime("yyyyMMdd",date);
 
         Example example = new Example(Task.class);
         Example.Criteria criteria = example.createCriteria();
@@ -148,6 +150,6 @@ public class PlanService implements PlanApi{
 
 
 
-        return ReturnT.result(Err.SUCCESS).dataMap("tasks",tasks).dataMap("modules",modules).dataMap("projects",projects);
+        return ReturnT.result(Err.SUCCESS).dataMap("tasks",tasks).dataMap("modules",modules).dataMap("projects",projects).dataMap("onLineDate",onLineDate);
     }
 }

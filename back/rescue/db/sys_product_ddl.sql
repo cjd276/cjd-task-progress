@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `module` (
   `name` varchar(50) NOT NULL COMMENT '模块名称',
   `code` varchar(50) NOT NULL COMMENT 'war包名称',
   `operate` text DEFAULT NULL COMMENT '操作步骤模板',
+  `is_delete` varchar(1) NOT NULL DEFAULT '0' COMMENT '0 未删除  1 已删除',
   `operate_return` DEFAULT NULL text COMMENT '回滚模板',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
