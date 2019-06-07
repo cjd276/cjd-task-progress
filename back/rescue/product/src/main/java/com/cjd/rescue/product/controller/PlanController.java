@@ -3,9 +3,7 @@ package com.cjd.rescue.product.controller;
 import com.cjd.rescue.api.plan.PlanApi;
 import com.cjd.rescue.common.anno.SysLog;
 import com.cjd.rescue.entity.common.ReturnT;
-import com.cjd.rescue.entity.product.AddPlanParams;
-import com.cjd.rescue.entity.product.AddProjectParams;
-import com.cjd.rescue.entity.product.Plan;
+import com.cjd.rescue.entity.product.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +48,18 @@ public class PlanController {
 
     public ReturnT getOnLineInfo(@RequestBody Plan plan){
         return planApi.getOnLineInfo(plan);
+    }
+
+    @RequestMapping("/getModuleApollo")
+    @SysLog
+
+    public ReturnT setModuleApollo(@RequestBody Apollo apollo){
+        return planApi.getModuleApollo(apollo);
+    }
+    @RequestMapping("/setModuleApollo")
+    @SysLog
+
+    public ReturnT setModuleApollo(@RequestBody AddApollosParams addApollosParams){
+        return planApi.setModuleApollo(addApollosParams);
     }
 }

@@ -1,0 +1,90 @@
+package com.cjd.rescue.entity.product;
+
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
+
+@Table(name = "apollo")
+public class Apollo {
+
+    @Id
+    private String id;
+
+    private String key_str;
+
+    private String value_str;
+
+    private Date create_time;
+
+    private Date modify_time;
+
+    private String operate_type;
+
+    private String plan_id;
+
+    private String module_id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getKey_str() {
+        return key_str;
+    }
+
+    public void setKey_str(String key_str) {
+        this.key_str = key_str;
+    }
+
+    public String getValue_str() {
+        return value_str;
+    }
+
+    public void setValue_str(String value_str) {
+        this.value_str = value_str;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    public Date getModify_time() {
+        return modify_time;
+    }
+
+    public void setModify_time(Date modify_time) {
+        this.modify_time = modify_time;
+    }
+
+    public String getOperate_type() {
+        return operate_type;
+    }
+
+    public void setOperate_type(String operate_type) {
+        this.operate_type = operate_type;
+    }
+
+    public String getPlan_id() {
+        return plan_id;
+    }
+
+    public void setPlan_id(String plan_id) {
+        this.plan_id = plan_id;
+    }
+
+    public String getModule_id() {
+        return module_id;
+    }
+
+    public void setModule_id(String module_id) {
+        this.module_id = module_id;
+    }
+}

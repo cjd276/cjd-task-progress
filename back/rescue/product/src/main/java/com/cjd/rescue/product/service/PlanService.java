@@ -35,6 +35,9 @@ public class PlanService implements PlanApi{
     @Autowired
     DingDingRobot dingDingRobot;
 
+    @Autowired
+    private ApolloMapper apolloMapper;
+
 
     @Autowired
     private TeamService teamService;
@@ -118,6 +121,8 @@ public class PlanService implements PlanApi{
         return ReturnT.result(Err.SUCCESS).dataMap("sysKeyValues",sysKeyValues).dataMap("plan",planTemp);
     }
 
+    @SysLog
+    @JDBCException
     @Override
     public ReturnT getOnLineInfo(Plan plan) {
 
@@ -137,19 +142,61 @@ public class PlanService implements PlanApi{
         List<Module> modules = taskModuleMapper.selectModules(tasks);
 
         List<Project> projects = new ArrayList<>();
+        List<Apollo> apollos = new ArrayList<>();
         Set<String> project_ids = new HashSet<>();
+        Set<String> module_ids = new HashSet<>();
         if(null != modules && modules.size() > 0){
             for (Module module:modules){
                 project_ids.add(module.getProject_id());
+                module_ids.add(module.getId());
             }
             Example examplep = new Example(Project.class);
             Example.Criteria criteriap = example.createCriteria();
-            criteriap.andEqualTo("id",project_ids);
+            criteriap.andIn("id",project_ids);
             projects= projectMapper.selectByExample(examplep);
+
+
+            Example examplea = new Example(Apollo.class);
+            Example.Criteria criteriaa = examplea.createCriteria();
+            criteriaa.andIn("module_id",module_ids);
+            criteriaa.andEqualTo("plan_id",plan.getId());
+            apollos= apolloMapper.selectByExample(examplep);
+
         }
 
 
 
-        return ReturnT.result(Err.SUCCESS).dataMap("tasks",tasks).dataMap("modules",modules).dataMap("projects",projects).dataMap("onLineDate",onLineDate);
+        return ReturnT.result(Err.SUCCESS).dataMap("tasks",tasks).dataMap("modules",modules).dataMap("projects",projects).dataMap("onLineDate",onLineDate).dataMap("apollos",apollos);
+    }
+
+    @SysLog
+    @JDBCException
+    @Override
+    public ReturnT getModuleApollo(Apollo apollo) {
+
+
+        List<Apollo> apollos = apolloMapper.select(apollo);
+
+
+        return ReturnT.result(Err.SUCCESS).dataMap("apollos",apollos);
+    }
+
+    @SysLog
+    @JDBCException
+    @Override
+    public ReturnT setModuleApollo(AddApollosParams addApollosParams) {
+        List<Apollo> apollos = addApollosParams.getApollos();
+        Apollo apolloParam = addApollosParams.getApollo();
+        apolloMapper.delete(apolloParam);
+        if(null != apollos && apollos.size() > 0){
+            for (Apollo apollo:apollos){
+                if(null != apollo.getKey_str() &&  null != apollo.getValue_str()){
+                    apollo.setId(IdUtil.generateID());
+                    apolloMapper.insertSelective(apollo);
+                }
+
+            }
+        }
+        return ReturnT.result(Err.SUCCESS);
     }
 }

@@ -22,6 +22,21 @@
     </el-card>
     <el-card class="box-card mtop20">
       <div slot="header" class="clearfix">
+        <span>apollo配置</span>
+      </div>
+      <div v-for="(item,index) in modules" :key="index" class="text item">
+        {{(index+1) +'、' + item.namespace + ':' }}
+        <template v-for="(apolloItem,index) in apollos">
+          <div class="text item" v-if="apolloItem.module_id==item.id" style="margin-top: 5px">
+            <el-tag style="margin-right: 10px" effect="plain" size="mini" >{{apolloItem.operate_type}}</el-tag>{{apolloItem.key_str+ ':' + apolloItem.value_str}}
+          </div>
+          
+        </template>
+        
+      </div>
+    </el-card>
+    <el-card class="box-card mtop20">
+      <div slot="header" class="clearfix">
         <span>服务监控项</span>
       </div>
       <div v-for="(item,index) in modules" :key="index" class="text item">
@@ -57,7 +72,8 @@
         tasks:[],
         modules:[],
         projects:[],
-        onLineDate:''
+        onLineDate:'',
+        apollos:[],
       }
     },
     created() {
@@ -74,6 +90,7 @@
                 this.modules = resultMap.modules;
                 this.projects = resultMap.projects;
                 this.onLineDate = resultMap.onLineDate;
+                this.apollos = resultMap.apollos;
             });
 
       },

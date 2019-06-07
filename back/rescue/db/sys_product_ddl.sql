@@ -27,9 +27,21 @@ CREATE TABLE IF NOT EXISTS `module` (
   `operate_return` DEFAULT NULL text COMMENT '回滚模板',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `operate_return` DEFAULT NULL varchar(50) COMMENT 'apollo id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE  IF NOT EXISTS `apollo` (
+	`id` varchar(50) NOT NULL COMMENT '主键',
+	`create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`modify_time` datetime ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+	`key_str` varchar(50) NOT NULL COMMENT '操作的key',
+	`value_str` text NOT NULL COMMENT '操作的值',
+	`operate_type` varchar(50) NOT NULL COMMENT '操作类型',
+	`module_id` varchar(50) NOT NULL COMMENT '模块id',
+	`plan_id` varchar(50) NOT NULL COMMENT '上线计划id',
+	PRIMARY KEY (`id`)
+) COMMENT='';
 -- 数据导出被取消选择。
 -- 导出  表 rescue.plan 结构
 CREATE TABLE IF NOT EXISTS `plan` (

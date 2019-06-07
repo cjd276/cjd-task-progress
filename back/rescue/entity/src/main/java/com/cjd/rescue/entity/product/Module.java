@@ -29,13 +29,19 @@ public class Module extends BaseObject{
     private String service_monitor;
 
 
+    private String namespace;
     private String is_delete;
     private String project_id;
+    @Transient
+    private List<Apollo> apollos;
     @Transient
     private boolean checked;
 
     @Transient
     private List<SysKeyValue> sysKeyValues;
+
+    @Transient
+    private String plan_id;
 
     public String getId() {
         return id;
@@ -131,5 +137,29 @@ public class Module extends BaseObject{
 
     public void setIs_delete(String is_delete) {
         this.is_delete = is_delete;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public List<Apollo> getApollos() {
+        return apollos;
+    }
+
+    public void setApollos(List<Apollo> apollos) {
+        this.apollos = apollos;
+    }
+
+    public String getPlan_id() {
+        return plan_id;
+    }
+
+    public void setPlan_id(String plan_id) {
+        this.plan_id = plan_id;
     }
 }

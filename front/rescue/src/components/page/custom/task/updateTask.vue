@@ -92,7 +92,7 @@
     <div class="crumbs">
         <el-breadcrumb separator="/">
             <el-breadcrumb-item><i class="el-icon-lx-calendar"></i> 任务</el-breadcrumb-item>
-            <el-breadcrumb-item>涉及项目模块</el-breadcrumb-item>
+            <el-breadcrumb-item>涉及项目模块及apllo设置</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
     <div class="container">
@@ -106,6 +106,7 @@
             <div v-for="module in projectModule.modules" :key="module.id" class="text item">             
               <el-checkbox v-model="module.checked">{{module.name}}</el-checkbox>
               <div style="display:inline-block;float:right">{{module.code}}</div>
+               <el-button v-if="module.checked"  plain  @click="setApollo(module.id,task.plan_id)">apollo设置</el-button>
             </div>
           </el-card>
         </template>
@@ -136,7 +137,15 @@
     },
 
     methods: {
-  
+      setApollo:function(module_id,plan_id){
+        this.$router.push({
+          path: "/apolloSetting",
+            query: {
+              module_id: module_id,
+              plan_id:plan_id
+            }
+          })
+      },
       getTask:function(){
         var task_id =  this.$route.query.id;
         this.updateTask["id"] = task_id;

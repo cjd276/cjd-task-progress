@@ -235,6 +235,11 @@ export default new Router({
                     path: '/projectModify',
                     component: resolve => require(['../components/page/custom/projectModify.vue'], resolve),
                     meta: { title: '编辑项目' }
+                },
+                {
+                    path: '/apolloSetting',
+                    component: resolve => require(['../components/page/custom/task/apolloSetting.vue'], resolve),
+                    meta: { title: '模块apollo' }
                 }
 
 

@@ -35,6 +35,9 @@
                     <el-form-item label="模块包名称" prop="code">
                         <el-input v-model="module.code"></el-input>
                     </el-form-item>
+                    <el-form-item label="namespace" prop="namespace">
+                        <el-input v-model="module.namespace"></el-input>
+                    </el-form-item>
                     <el-form-item label="操作模板" prop="operate">
                         <el-input type="textarea"  v-model="module.operate" ></el-input>
                       </el-form-item>
