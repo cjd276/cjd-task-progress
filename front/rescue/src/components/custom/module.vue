@@ -38,15 +38,24 @@
                     <el-form-item label="namespace" prop="namespace">
                         <el-input v-model="module.namespace"></el-input>
                     </el-form-item>
-                    <el-form-item label="操作模板" prop="operate">
+                    <!-- <el-form-item label="操作模板" prop="operate">
                         <el-input type="textarea"  v-model="module.operate" ></el-input>
-                      </el-form-item>
-                      <el-form-item label="回退模板" prop="operate_return">
+                      </el-form-item> -->
+                      <!-- <el-form-item label="回退模板" prop="operate_return">
                         <el-input type="textarea"  v-model="module.operate_return"></el-input>
-                      </el-form-item>
+                      </el-form-item> -->
                       <el-form-item label="服务监控项" prop="service_monitor">
                         <el-input type="textarea"  v-model="module.service_monitor"></el-input>
                       </el-form-item>
+                      <el-form-item label="操作模板">
+                        <mavon-editor defaultOpen="edit" v-model="module.operate"   style="min-height: 300px;min-width: 1000px"/>
+                      </el-form-item>
+                      <el-form-item label="回退模板">
+                        <mavon-editor defaultOpen="edit" v-model="module.operate_return"   style="min-height: 300px;min-width: 1000px"/>
+                      </el-form-item>
+                      <!-- <el-form-item label="服务监控项">
+                        <mavon-editor defaultOpen="edit" v-model="module.service_monitor" style="min-height: 300px;min-width: 1000px"/>
+                      </el-form-item> -->
                       <div class="moduleDyna">
                        <dynamicProperties :title="'项目/模块'" :ref="'addModuleDyna'+index" :isEdit="isEdit"/>
                      </div>
@@ -75,6 +84,8 @@
 <script>
   
   import dynamicProperties from '@/components/custom/dynamicProperties.vue'
+  import { mavonEditor } from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
   export default {
     name:"module",
     props:{
@@ -98,9 +109,11 @@
                 { required: true, message: '请输入模块war名称', trigger: 'blur' },
               ]
 
-            }
-      }
-    },
+            },
+          
+        }
+      },
+      
     created() {
       if(this.isEdit == 1){
         this.addModule();
@@ -131,21 +144,7 @@
       getModules:function(){
 
 
-        /*this.$refs["moduleForm"].validate((valid) => {
-              if (valid) {
-                for (var i = this.modules.length - 1; i >= 0; i--) {
-        
-                  var key = "addModuleDyna"+i;
-                  var temp = this.$refs[key][0].getKvs();
-                  this.modules[i].sysKeyValues = temp;
-                }
-                return this.modules;
 
-              }else{
-                return false;
-              }
-
-          });*/
         if(this.myvalidate(this.$refs["moduleForm"])){
           for (var i = this.modules.length - 1; i >= 0; i--) {
             var key = "addModuleDyna"+i;
@@ -192,10 +191,12 @@
     components:{
 
       dynamicProperties,
+      mavonEditor,
     },
   }
 </script>
 <style type="text/css">
+
   .lef20{
      float: right;
   }

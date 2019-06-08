@@ -47,25 +47,28 @@
       <div slot="header" class="clearfix">
         <span>上线步骤</span>
       </div>
-      <div v-for="(item,index) in modules" :key="index" class="text item">
+      <mavon-editor :toolbarsFlag="toolbarsFlag" defaultOpen="edit" :value="handleOperate"   style="min-height: 300px;min-width: 1000px"/>
+      <!-- <div v-for="(item,index) in modules" :key="index" class="text item">
   
         {{(index+1) +'、' + item.operate}}
     
-      </div>
+      </div> -->
     </el-card>
     <el-card class="box-card mtop20">
       <div slot="header" class="clearfix">
         <span>回退方案</span>
       </div>
-      <div v-for="(item,index) in modules" :key="index" class="text item">
+      <mavon-editor :toolbarsFlag="toolbarsFlag" defaultOpen="edit" :value="handleOperateReturn"   style="min-height: 300px;min-width: 1000px"/>
+      <!-- <div v-for="(item,index) in modules" :key="index" class="text item">
         {{(index+1) +'、' + item.operate_return}}
-      </div>
+      </div> -->
     </el-card>
   </div>
 </template>
 
 <script>
-
+import { mavonEditor } from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
   export default {
     data() {
       return {
@@ -74,15 +77,39 @@
         projects:[],
         onLineDate:'',
         apollos:[],
+        toolbarsFlag:false,
+
       }
     },
     created() {
       this.getOnLineInfo();
     },
     computed: {
+      handleOperate:function(){
+        if(null != this.modules && this.modules.length > 0){
+          var temp = '';
+          for (var i =0;i<this.modules.length; i++) {
+            temp += (i+1) + '、' + this.modules[i].operate + '\r\n';
 
+          }
+          return temp;
+        }
+        return '';
+      },
+      handleOperateReturn:function(){
+        if(null != this.modules && this.modules.length > 0){
+          var temp = '';
+          for (var i =0;i<this.modules.length; i++) {
+            temp += (i+1) + '、' + this.modules[i].operate_return + '\r\n';
+
+          }
+          return temp;
+        }
+        return '';
+      }
     },
     methods: {
+
       getOnLineInfo:function(){
         var plan_id = this.$route.query.plan_id;
           this.$dataPostXD("/plan/getOnLineInfo", {id: plan_id}, (resultMap)=>{
@@ -94,6 +121,11 @@
             });
 
       },
+    },
+    components:{
+
+
+      mavonEditor,
     },
 
   }
