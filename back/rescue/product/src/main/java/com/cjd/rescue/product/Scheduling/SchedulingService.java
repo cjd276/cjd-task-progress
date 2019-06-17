@@ -1,9 +1,11 @@
 package com.cjd.rescue.product.Scheduling;
 
 import com.cjd.rescue.common.util.DateUtil;
+import com.cjd.rescue.dao.product.TaskMapper;
 import com.cjd.rescue.dao.product.TaskProcessSettingsMapper;
 import com.cjd.rescue.dao.product.TeamMapper;
 import com.cjd.rescue.dao.product.UserTaskMapper;
+import com.cjd.rescue.entity.product.Task;
 import com.cjd.rescue.entity.product.TaskProcessSettings;
 import com.cjd.rescue.entity.product.Team;
 import com.cjd.rescue.entity.shiro.User;
@@ -33,7 +35,13 @@ public class SchedulingService{
     @Autowired
     private TeamMapper teamMapper;
 
-    @Scheduled(cron = "0 0/10 9-18 ? * 2,3,4,5,6")
+    @Autowired
+    private TaskMapper taskMapper;
+
+
+
+    //@Scheduled(cron = "0 0/10 9-18 ? * 2,3,4,5,6")
+    @Scheduled(cron = "0 0/1 * * * *")
     public void taskNotice(){
         TaskProcessSettings taskProcessSettingsParam = new TaskProcessSettings();
         taskProcessSettingsParam.setNeed_notice("1");
@@ -42,7 +50,7 @@ public class SchedulingService{
         if(null != taskProcessSettings && taskProcessSettings.size() > 0){
             for(TaskProcessSettings tps:taskProcessSettings){
                 Date nt = tps.getEnd_notice_time();
-                if(new Date().before(nt)){
+                if(new Date().after(nt)){
                     List<User> users = userTaskMapper.listTaskUser(tps.getTask_id());
                     LinkedHashMap<String,String> contentMap = new LinkedHashMap<>();
                     List<String> phones = new ArrayList<>();
@@ -59,8 +67,13 @@ public class SchedulingService{
                     contentMap.put("任务名称",tps.getTask_name());
                     contentMap.put("计划截至时间", DateUtil.date2String(tps.getEnd_notice_time()) );
                     contentMap.put("温馨提示", "请" + stringBuffer.toString() + "安排好工作时间，在决定是否进行加班以便完成任务进度");
+                    Task taskParam = new Task();
+                    taskParam.setId(tps.getTask_id());
+
+                    Task task = taskMapper.selectByPrimaryKey(taskParam);
+
                     Team teamParam = new Team();
-                    teamParam.setId(tps.getTask_id());
+                    teamParam.setId(task.getTeam_id());
                     Team team = teamMapper.selectByPrimaryKey(teamParam);
                     String sendUrl = team.getDing_url();
                     dingDingRobot.doSendPhones(contentMap,phones,sendUrl);
@@ -74,6 +87,8 @@ public class SchedulingService{
         }
 
     }
+
+
 
 
 

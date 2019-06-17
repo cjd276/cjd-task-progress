@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `task_process_settings` (
   `plan_name` varchar(50) NOT NULL,
   `task_process_id` varchar(50) NOT NULL,
   `task_process_name` varchar(50) NOT NULL,
-  `end_notice_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `end_notice_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `need_notice` varchar(2) NOT NULL DEFAULT '1' COMMENT '1 需要提醒   0 不需要提醒',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
