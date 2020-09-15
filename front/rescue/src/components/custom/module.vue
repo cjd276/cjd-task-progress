@@ -48,10 +48,10 @@
                         <el-input type="textarea"  v-model="module.service_monitor"></el-input>
                       </el-form-item>
                       <el-form-item label="操作模板">
-                        <mavon-editor defaultOpen="edit" v-model="module.operate"   style="min-height: 300px;min-width: 1000px"/>
+                        <mavon-editor defaultOpen="edit" v-model="module.operate"   />
                       </el-form-item>
                       <el-form-item label="回退模板">
-                        <mavon-editor defaultOpen="edit" v-model="module.operate_return"   style="min-height: 300px;min-width: 1000px"/>
+                        <mavon-editor defaultOpen="edit" v-model="module.operate_return"  />
                       </el-form-item>
                       <!-- <el-form-item label="服务监控项">
                         <mavon-editor defaultOpen="edit" v-model="module.service_monitor" style="min-height: 300px;min-width: 1000px"/>

@@ -17,11 +17,11 @@
                             <el-option key="imoo" label="开关" value="switch"></el-option>
                             <el-option key="imoox" label="多文本" value="textArea"></el-option>
                         </el-select>
-                        <el-select v-model="kvType" placeholder="属性类型"  class="lef20 right10">
-                            <el-option v-for="item in kvTypeList" :key="item.kv_type_name" :label="item.kv_type_name" :value="item"></el-option>
+                        <el-select v-model="kv_type_name"  placeholder="属性类型"  style="margin-left: 5px">
+                            <el-option  v-for="item in kvTypeList" :key="item.kv_type_name" :label="item.kv_type_name" :value="item.kv_type_name"></el-option>
              
                         </el-select>
-                        <el-button plain @click="addField()" class="lef20" style="margin-right: 15px;">添加-></el-button>
+                        <el-button plain @click="addField()" class="lef20" >添加-></el-button>
                      </el-form-item>
                     <template v-for="(item,index) in textField">
                       <el-form-item>
@@ -90,9 +90,8 @@
         switchField:[],
         textAreaField:[],
         kvTypeList:[],
-        kvType:{
-          kv_type_name:"散列属性"
-        }
+        kv_type_name:"散列属性"
+        
 
       }
     },
@@ -107,8 +106,7 @@
             });
       },
       addField:function(){
-        console.log(this.kvType.kv_type_key)
-        console.log(this.kvType.kv_type_name)
+        console.log(this.kv_type_name)
         if(this.addType == "text"){
           if(!this.textField){
             this.textField = [];
@@ -116,7 +114,7 @@
           var textFileTemplate={
             bond:'文本',
             val:'',
-            kv_type_name:this.kvType.kv_type_name,
+            kv_type_name:this.kv_type_name,
             _id:Math.random()
           };
           this.textField.push(textFileTemplate);
@@ -125,7 +123,7 @@
           var textAreaFileTemplate={
             bond:'多行文本',
             val:'',
-            kv_type_name:this.kvType.kv_type_name,
+            kv_type_name:this.kv_type_name,
             _id:Math.random()
           };
           this.textAreaField.push(textAreaFileTemplate);
@@ -135,7 +133,7 @@
           var  dateFileTemplate={
             bond:'日期',
             val:'',
-            kv_type_name:this.kvType.kv_type_name,
+            kv_type_name:this.kv_type_name,
             _id:Math.random()
           };
           this.dateField.push(dateFileTemplate);
@@ -144,7 +142,7 @@
           var switchFileTemplate = {
             bond:'开关',
             val:0,
-            kv_type_name:this.kvType.kv_type_name,
+            kv_type_name:this.kv_type_name,
             _id:Math.random()
           };
           this.switchField.push(switchFileTemplate);
